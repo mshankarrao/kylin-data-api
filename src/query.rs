@@ -12,49 +12,28 @@ pub const APPLICATION_JSON: &str = "application/json";
 
 pub type Prices = Response<Price>;
 
-// #[derive(Debug, Deserialize, Serialize)]
-// pub struct APIResponse {
-//     pub source: String,
-//     pub created_at: DateTime<Utc>,
-//     pub actual_price: i32,
-// }
+#[derive(Debug, Deserialize, Serialize)]
+struct Price {
+    #[serde(default)]
+    symbol: String,
+    #[serde(default)]
+    bid: String,
+    #[serde(default)]
+    price: String,
+    #[serde(default)]
+    volume: String,
+    #[serde(default)]
+    time: String,
+}
 
-// impl APIResponse {
-//     pub fn new(source: String) -> Self {
+// impl Price {
+//     async fn new(price: String, symbol: String) -> Self {
 //         Self {
-//             created_at: Utc::now(),
-//             source,
-//             actual_price: 100,
+//             price: price,
+//             symbol: symbol,
 //         }
 //     }
 // }
-
-// #[get("/get_data")]
-// pub async fn get_data() -> HttpResponse {
-//     let hello = "Kylin is great";
-
-//     let mut v: Vec<APIResponse> = Vec::new();
-//     v.push(APIResponse::new("Kylin".to_string()));
-
-//     HttpResponse::Ok()
-//         .content_type(APPLICATION_JSON)
-//         .json(Prices { results: v })
-// }
-
-#[derive(Debug, Deserialize, Serialize)]
-struct Price {
-    symbol: String,
-    price: String,
-}
-
-impl Price {
-    async fn new(price: String, symbol: String) -> Self {
-        Self {
-            price: price,
-            symbol: symbol,
-        }
-    }
-}
 
 #[get("/get_data")]
 #[tokio::main]
@@ -72,10 +51,12 @@ pub async fn get_data() -> HttpResponse {
 }
 
 pub async fn get_helper() -> Result<Price, ExitFailure> {
-    let url = format!("https://api.binance.com/api/v3/ticker/price?symbol=BTCDAI");
+    let url = format!("https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDC");
 
     let url = Url::parse(&*url)?;
-    let res = reqwest::get(url).await?.json::<Price>().await?;
+    let mut res = reqwest::get(url).await?.json::<Price>().await?;
+    res.time = Utc::now().to_string();
+    //res.time
     //let res = Price::new(res.price, res.symbol).await;
     //println!("Bhaiya {:?}", res);
 
