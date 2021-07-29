@@ -1,0 +1,21 @@
+[package]
+name = "kylin-data-api"
+version = "0.1.0"
+authors = ["Shankar Rao Mata <mshankarrao1970@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+actix-rt = "1.1.0"
+actix-web = "3.0.0-alpha.1"
+chrono = { version = "0.4", features = ["serde"] }
+uuid = { version = "0.6", features = ["serde", "v4"] }
+env_logger = "0.7.1"
+reqwest = { version = "0.11.0", features = ["json"] }
+serde = "1.0.119"
+serde_json = "1.0.61"
+serde_derive = "1.0.119"
+structopt = "0.3.21"
+exitfailure = "0.5.1"
+tokio = { version = "1.0.2", features = ["full"] }
