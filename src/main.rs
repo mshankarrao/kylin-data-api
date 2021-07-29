@@ -1,9 +1,9 @@
 #[macro_use]
 extern crate actix_web;
 
-use std::{env, io};
+use std::{io};
 
-use actix_web::{middleware, App, HttpServer};
+use actix_web::{App, HttpServer};
 
 mod query;
 mod response;
