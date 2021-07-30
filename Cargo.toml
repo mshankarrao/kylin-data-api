@@ -19,3 +19,4 @@ serde_derive = "1.0.119"
 structopt = "0.3.21"
 exitfailure = "0.5.1"
 tokio = { version = "1.0.2", features = ["full"] }
+futures = "0.3"
