@@ -37,7 +37,7 @@ pub async fn get_data() -> HttpResponse {
     let mut source: HashMap<&str, &str> = HashMap::new();
     source.insert(
         "coinbase",
-        "https://api.pro.coinbase.com/products/BTC-USDC/ticker",
+        "https://api.pro.coinbase.com/products/BTC-USD/ticker",
     );
     source.insert(
         "binance",
@@ -54,12 +54,10 @@ pub async fn get_data() -> HttpResponse {
     }
 
     let mut data: HashMap<String, Price> = HashMap::new();
-    let mut count = 1;
     for val in v.iter() {
-        let serialized = serde_json::to_string_pretty(val).unwrap();
+        let serialized = serde_json::to_string(val).unwrap();
         let deserialized: Price = serde_json::from_str(&serialized).unwrap();
-          data.insert("source".to_string() + &count.to_string(), deserialized);
-        count = count + 1;
+          data.insert(val.source.to_string() , deserialized);
     }
 
     HttpResponse::Ok()
